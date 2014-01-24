@@ -1,0 +1,22 @@
+FS Gui is a turnkey file management system for the web.
+
+Complete System: no limitations. Manage your files just like they were on your desktop.
+
+Upload, delete, move, copy, paste your folders. Create new folders or delete them.
+
+
+Features:
+
+* No installation required - it works out of the box
+* Easy to use
+* Drag and drop files and folders
+* Large uploads
+* Multiple uploads
+* Downloads
+* HTML editor
+* Image previewer
+* Works on windows and linux servers
+* No legacy issues - it works on IE6 and every major browser
+* No flash or java required
+* Secure and safe
+* Multi-user module, access control, login protected, administrator panel
