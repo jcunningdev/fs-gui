@@ -1,5 +1,16 @@
 <?php
 
+class debug {
+
+	public static function log($statement, $optionalvar=null) {
+	
+		#define your preferred debug method here.
+		echo nl2br($statement . "\n");
+		if( isset($optionalvar)) { var_dump($optionalvar); }
+	}
+
+}
+
 function IRON__initSession() {
 	/* sessions are superset of multihased accounts and magic variables. 
 	* WHAT IT DOES:

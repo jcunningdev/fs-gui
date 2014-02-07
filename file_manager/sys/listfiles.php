@@ -6,14 +6,13 @@ IRON__initRuntime();
 IRON__cleanRequest();
 IRON__initSession();
 
-//echo $_SERVER['SCRIPT_FILENAME']; //debug
-
 	//part of the ZOA FILE MANAGEMENT PI
-// src/listfiles.php
+// sys/listfiles.php
+debug::log("script fired: " . substr($_SERVER['SCRIPT_FILENAME'], strlen(ZOA__APP__PROG_DIR))); //debug
 
 //defaults
 $nofilesattached	= "<div value=\"NONE\" >--No Files--</div>";
-$previousdirectory	= "<div ondblclick=\"previousDirectory(); return false;\"><I>< back</I></div>";
+$previousdirectory	= "<div style=\"cursor: pointer;\" ondblclick=\"previousDirectory(); return false;\"><I>< back</I></div>";
 //$listbutton			= "<input type=\"submit\" name=\"zoa__action\" id=\"remove\" value=\"deletefiles\" title=\"Remove Selected Images\" class=\"button\">";
 $listbutton			= "";
 
@@ -27,30 +26,33 @@ if ( (!isset($currentFilePath)) && ($currentFilePath != "") ) { $currentFilePath
 
 if (true) {
 
+	debug::log("script fired: " . substr($_SERVER['SCRIPT_FILENAME'], strlen(ZOA__APP__PROG_DIR))); //debug
+
 	$qid = "qid";
 	$currentFilePath = IRON__getMSHSession($qid, "current_directory_path");
-	echo $currentFilePath; 
+	
+	debug::log("reading files from: {$currentFilePath}"); //debug
+	
 	if ( (!isset($currentFilePath)) || ($currentFilePath == "") ) { $currentFilePath = ZOA__APP__START_FILE_DIR; }
-
-	echo $currentFilePath . "<br>";
 
 	$chroot_directory = ZOA__APP__CHROOT_FILE_DIR;
 
 	$xcore_directory = $chroot_directory . $currentFilePath . "/"; //set this to location of files uploaded. Tie it into the session
-	echo $xcore_directory; //debug
+	debug::log("reading files in fullpath: {$xcore_directory}"); //debug
+	
 	$fileList = listFiles($xcore_directory); //Get a list of all the files in that directory
 	
 	$options = "";	
 	if ($currentFilePath != "/") { $options .= $previousdirectory; }
 
 
-	if ($fileList[0]) { 
-		//$finfo	= finfo_open(FILEINFO_MIME_TYPE); //open magic mime types
+	if (!empty($fileList[0])) { 
+		$finfo	= finfo_open(FILEINFO_MIME_TYPE); //open magic mime types
 		foreach ($fileList as $filename) {
 			if (is_file($xcore_directory . $filename)) {
 				
-				//$type	= finfo_file($finfo, $xcore_directory . $filename);
-				//if (strpos($type, "image") !== FALSE) { $fs_itype = "image"; } else { $fs_itype = "text"; } //be sure to differentiate between zero and FALSE
+				$type	= finfo_file($finfo, $xcore_directory . $filename);
+				if (strpos($type, "image") !== FALSE) { $fs_itype = "image"; } else { $fs_itype = "text"; } //be sure to differentiate between zero and FALSE
 				$options .= "<div class=\"file_item\" 	"
 							. "fs_loc=\"{$filename}\"	"
 							. "fs_itype=\"{$fs_itype}\"	"

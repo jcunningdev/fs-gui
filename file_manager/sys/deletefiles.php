@@ -6,7 +6,7 @@
 	IRON__cleanRequest();
 	IRON__initSession();
 
-	echo $_SERVER['SCRIPT_FILENAME']; //debug
+	debug::log("script fired: " . substr($_SERVER['SCRIPT_FILENAME'], strlen(ZOA__APP__PROG_DIR))); //debug
 
 
 	//part of the ZOA FILE MANAGEMENT PI
@@ -18,7 +18,8 @@ $error = '';
 //PI values
 	
 $unsanitizedfilenames = isset($_REQUEST['zoa_uploaded_file_list']) ? $_REQUEST['zoa_uploaded_file_list'] : NULL;	
-	
+
+
 $qid = "qid";
 $currentFilePath = IRON__getMSHSession($qid, "current_directory_path");
 if ( (!isset($currentFilePath)) || ($currentFilePath == "") ) { $currentFilePath = ZOA__APP__START_FILE_DIR; }
@@ -27,16 +28,22 @@ if ( (!isset($currentFilePath)) || ($currentFilePath == "") ) { $currentFilePath
 $chroot_directory = ZOA__APP__CHROOT_FILE_DIR;
 
 $xcore_directory = $chroot_directory . $currentFilePath . ""; //set this to location of files uploaded. Tie it into the session
-echo $xcore_directory; //debug
+debug::log($xcore_directory); //debug
 	
-	
-foreach ($unsanitizedfilenames as $filename) {
-	
-	$filename = IRON__sanitizeString($filename, "filename", '_');
+if (is_array($unsanitizedfilenames)) { 	
+	foreach ($unsanitizedfilenames as $filename) {
+		$filename = IRON__sanitizeString($filename, "filename", '_');
+		echo $xcore_directory . $filename;
+		echo "removed<br>";
+		unlink($xcore_directory . $filename);
+	}
+} else if (is_string($unsanitizedfilenames)) {
+
+	$filename = IRON__sanitizeString($unsanitizedfilenames, "filename", '_');
 	echo $xcore_directory . $filename;
 	echo "removed<br>";
 	unlink($xcore_directory . $filename);
-	
+
 }
 	
 

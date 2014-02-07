@@ -6,16 +6,16 @@
 	IRON__cleanRequest();
 	IRON__initSession();
 
-	echo $_SERVER['SCRIPT_FILENAME']; //debug
+	debug::log("script fired: " . substr($_SERVER['SCRIPT_FILENAME'], strlen(ZOA__APP__PROG_DIR))); //debug
 	
 	
 	//input is: zoa_file_current_directory_path
 	$directory_path  = isset($_REQUEST['zoa_file_current_directory_path']) ? $_REQUEST['zoa_file_current_directory_path'] : ZOA__APP__START_FILE_DIR;
-
+	debug::log("directory_path set to: {$directory_path}");
+	
 	$qid = "qid";
-	echo "<br>" . $directory_path . "" . "<br>";
 	IRON__setMSHSessionVar($qid, "current_directory_path", $directory_path);
-	echo IRON__getMSHSession($qid, "current_directory_path");
+	debug::log("user directory path saved as: " . IRON__getMSHSession($qid, "current_directory_path"));
 	
 	$error = "";
 	$state = "";
