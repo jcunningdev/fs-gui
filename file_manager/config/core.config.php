@@ -10,7 +10,7 @@ define("ZOA__APP__PROG_DIR", "/thedirectory of the program/");
 define("ZOA__APP__CHROOT_FILE_DIR", "/the directory of the files you want to manage/files"); //no trailing slash: chroot takes care of it
 
 define("ZOA__APP__START_FILE_DIR", "/"); //relative to CHROOT_DIR; this is where the file manager is initially opened to
-define("ZOA__LIB__CORE", ZOA__APP__PROG_DIR . "lib.core.php");
+define("ZOA__LIB__CORE", ZOA__APP__PROG_DIR . "/hypatiacore/lib.core.php");
 
 
 
